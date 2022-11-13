@@ -1,6 +1,43 @@
-# Getting Started with Create React App
+# Overview
+This is a friendly fun project created after going through the pain of building custom things to calculate the leaderboard for the match predictions during the World Cup 2018, & Euro Cup 2020. I will be updating this for World Cup 2022. This can be used as the dashboard for the social betting between friends.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This uses bootstrap's static single pages design suited best for all devices like mobile, desktop etc.
+
+# Usage
+Fork this project and peform the following steps to customize it for you and your friends:
+1. `_data/*` has sample files for prediction and results. You need to update the files for you friends. Use an either online form like Microsoft Forms or Microsoft Excel to collect all the prediction scores from your friends.
+2. Upload the CSV files in a publicly accessible read-only storage location. You can use Azure Storage account for uploading the CSV, set the CORS, and set the appropriate permission. The browser just needs a read-only access to these CSV files.
+3. Update `betwc/js/games/*.js` to point to the publicly accessible CSV
+4. Upload the Avatars for your friends under `betwc/assets/img/`. The final name for the Avatar should be like `Anoob.png`. Use the same name used in the CSV files for the Avatar image name. 
+5. Edit `index.html` and update `aside` with all the Avatar img URLs.
+
+To view a preview open the `index.html` file in your web browser after making the changes.
+
+# Scoring
+- Till quarterfinals, a perfect guess of score & the winner will bag 3-points. It will be 1-point if you predicted only the winner.
+- From quarterfinals, a perfect guess of score & the winner is 5-points. If you predicted only the winner it will be 3-points. A wrong prediction will result in a deduction of 1-point.
+- From semifinals, a perfect guess of score & the winner is 15-points. If you predicted only the winner it will be 5-points. A wrong prediction will result in a deduction of 5-point.
+- From finals, a perfect guess of score & the winner is 40-points. If you predicted only the winner it will be 15-points. A wrong prediction will result in a deduction of 10-point.
+
+# Screenshots
+
+
+# To do
+- Improve the documentation
+- Improve the code to make it modular, reusable, configurable
+- Add support for localization
+- Add unit tests
+- Automate the collecting prediction input from friends.
+- Fetch match schedule, match results and particpant prediction using API.
+- Integrate with DevOps CI/CD
+
+# Tools used
+- Avatars generated from [Getavataaars](https://getavataaars.com).
+- Bootstrap template [New Age](https://github.com/BlackrockDigital/startbootstrap-new-age)
+- Parsing of CSV using [Papa parse](http://papaparse.com/)
+
+# Copyright and License
+Code released under the [MIT](https://github.com/anoobbacker/betwc/blob/master/LICENSE) license.
 
 ## Available Scripts
 
@@ -38,28 +75,6 @@ If you aren't satisfied with the build tool and configuration choices, you can `
 Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
 You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
 
 ### Deployment
 
