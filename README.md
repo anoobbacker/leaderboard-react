@@ -7,8 +7,8 @@ This uses bootstrap's static single pages design suited best for all devices lik
 Fork this project and peform the following steps to customize it for you and your friends:
 1. `_data/*` has sample files for prediction and results. You need to update the files for you friends. Use an either online form like Microsoft Forms or Microsoft Excel to collect all the prediction scores from your friends.
 2. Upload the CSV files in a publicly accessible read-only storage location. You can use Azure Storage account for uploading the CSV, set the CORS, and set the appropriate permission. The browser just needs a read-only access to these CSV files.
-3. Update `betwc/js/games/*.js` to point to the publicly accessible CSV
-4. Upload the Avatars for your friends under `betwc/assets/img/`. The final name for the Avatar should be like `Anoob.png`. Use the same name used in the CSV files for the Avatar image name. 
+3. Update `src/assets/js/games/*.js` to point to the publicly accessible CSV
+4. Upload the Avatars for your friends under `src/assets/img/`. The final name for the Avatar should be like `Anoob.png`. Use the same name used in the CSV files for the Avatar image name. 
 5. Edit `index.html` and update `aside` with all the Avatar img URLs.
 
 To view a preview open the `index.html` file in your web browser after making the changes.
