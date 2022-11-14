@@ -1,41 +1,90 @@
-import React, { useState } from 'react';
-import {defaultLocale, localeList} from './const/locale';
+import React from 'react';
+import { TournamentContext, Tournaments } from './components/TournamentContext';
 import {updateLeaderBoardCatalog} from './games/football-wc/processWC'
-import {teamFlag, teamNameAcronymn } from './const/teamNameAndFlag'
+import {teamNameAcronymn } from './const/teamNameAndFlag'
 import LeaderBoard from './components/LeaderBoard';
 import LeaderBoardBreakDown from './components/LeaderBoardBreakDown';
 import UpcomingMatches from './components/UpcomingMatches';
 import MatchPredictions from './components/MatchPrediction';
 import Papa from "papaparse"
+import DropdownMenu from './DropdownMenu';
+
+// An intermediate component that uses the changeTournament
+function Content(props) {
+  return (
+      <div>
+          <DropdownMenu />
+      </div>
+  );
+}
 
 class App extends React.Component {
   constructor(props) {
-    super(props);    
-    //based on what user clicks initalize the right CSV variables 
-    //these variables are defined under /js/games/*.js
-    this.state = {
-      resultsURL: props.resultsURL,
-      predictionURL: props.predictionURL,
-      matchStages: props.matchStages,
+    super(props);
+      
+    this.switchTournament = (e) => {
+      //console.log('App: You clicked:', e.target.text);
+
+      var p = null;
+      if (Tournaments.WorldCup2022.name == e.target.text) {
+          //console.log('App Clicked: setting ', Tournaments.WorldCup2022);
+          p = this.setState({tournament: Tournaments.WorldCup2022});
+      } else if (Tournaments.WorldCup2018.name == e.target.text) {
+          //console.log('App Clicked: setting ', Tournaments.WorldCup2018);
+          p = this.setState({tournament: Tournaments.WorldCup2018});
+      } else if (Tournaments.EuroCup2020.name == e.target.text) {
+          //console.log('App Clicked: setting ', Tournaments.EuroCup2020);
+          p = this.setState({tournament: Tournaments.EuroCup2020});
+      }
+      Promise.all([
+        p
+      ]).then(() => {
+        this.componentDidMount();
+      }).catch(console.log);;
+      
+      //console.log('App Clicked: ', this.context);
     };
-    //console.log("Setting variables...", this.state);
+
+    // State also contains the updater function so it will
+    // be passed down into the context provider
+    this.state = {
+      tournament: Tournaments.WorldCup2022,
+      switchTournament: this.switchTournament,
+      leaderboard: {},
+      countScorePlusWin: {},
+      countWin: {},
+      countLost: {},
+      matchScorePlusWin: {},
+      matchWin: {},
+      matchLoss: {},
+      totalPredicts: {},
+      allGames: [],
+      upcomingGames: [],
+      sortedLeaderNames: [],
+    };    
   }
+  
 
   componentDidMount() {
+    //let value = this.context;
+    //console.log("App Context: ", value);
     //start processing the the selected tournament
     //console.log("Processing tournament: ", this.props.tournamentName);
+    let resutlsURL = this.state.tournament.resultsURL;
+    let predictionURL = this.state.tournament.predictionURL;
+    //console.log("Processing: ", this.state.tournament);
     
     //load the results CSV
-    //console.log("Loading Results URL:", this.state.resultsURL)
-    const p1 = this.loadFile(this.state.resultsURL);
+    //console.log("Loading Results URL:", resutlsURL)
+    const p1 = this.loadFile(resutlsURL);
     p1.then((data) => {
       this.setState({results: data});
     })
     .catch(console.log);
 
     //load the predictions CSV
-    //console.log("Loading Prediction URL:", this.state.predictionURL)
-    const p2 = this.loadFile(this.state.predictionURL);
+    //console.log("Loading Prediction URL:", predictionURL)
+    const p2 = this.loadFile(predictionURL);
     p2.then((data) => {
       this.setState({predictions: data});
     })
@@ -47,8 +96,8 @@ class App extends React.Component {
       p1,
       p2
     ]).then((values) => {
-      this.processData(values[0], values[1], this.state.matchStages);
-    });
+      this.processData(values[0], values[1], this.state.tournament.matchStages);
+    }).catch(console.log);
   }
  
   // load CSV and return promise
@@ -463,57 +512,64 @@ class App extends React.Component {
     this.setState({upcomingGames: upcomingPredictions});
 
     //console.log("allPredictions", allPredictions)
-    this.setState({allGames: allPredictions});    
+    this.setState({allGames: allPredictions});
+
+    //console.log("State: ", this.state)
   }
 
   render() {
-    //console.log("App: ", this.state);
-    const leaderboard = this.state.leaderboard;
-    const totalPredict = this.state.totalPredicts?.Total;
+    const leaderboard = this.state?.leaderboard;
+    const totalPredict = this.state?.totalPredicts?.Total;
     if ( undefined != leaderboard ) {
       return (
-        <div  
-          data-bs-spy="scroll" 
-          data-bs-target="#simple-list-example" 
-          data-bs-offset="0" 
-          data-bs-smooth-scroll="true" 
-          className="scrollspy-example" 
-          tabIndex="0"
-          key={leaderboard}>
-          
-          <LeaderBoard 
-            tournamentName={this.props.tournamentName} 
-            leaderBoard={this.state.leaderboard}
-            leaderNames={this.state.sortedLeaderNames}
-            countScorePlusWin={this.state.countScorePlusWin}
-            countWin={this.state.countWin}
-            countLost={this.state.countLost}
-            totalPredicts={totalPredict}
-            />
+        <TournamentContext.Provider value={this.state}>
+          <Content />
 
-          {(undefined != totalPredict) && (totalPredict> 0) &&
-            <LeaderBoardBreakDown 
+          <div  
+            data-bs-spy="scroll" 
+            data-bs-target="#simple-list-example" 
+            data-bs-offset="0" 
+            data-bs-smooth-scroll="true" 
+            className="scrollspy-example" 
+            tabIndex="0"
+            key={leaderboard}>
+            
+            <LeaderBoard 
+              tournamentName={this.state.tournament.name} 
+              leaderBoard={this.state.leaderboard}
               leaderNames={this.state.sortedLeaderNames}
               countScorePlusWin={this.state.countScorePlusWin}
               countWin={this.state.countWin}
               countLost={this.state.countLost}
+              totalPredicts={totalPredict}
+              />
+
+            {(undefined != totalPredict) && (totalPredict> 0) &&
+              <LeaderBoardBreakDown 
+                leaderNames={this.state.sortedLeaderNames}
+                countScorePlusWin={this.state.countScorePlusWin}
+                countWin={this.state.countWin}
+                countLost={this.state.countLost}
+              />
+            }
+
+            <UpcomingMatches 
+              leaderNames={this.state.sortedLeaderNames}
+              upcomingGames={this.state.upcomingGames}
             />
-          }
 
-          <UpcomingMatches 
-            leaderNames={this.state.sortedLeaderNames}
-            upcomingGames={this.state.upcomingGames}
-          />
-
-          <MatchPredictions 
-            allPredictions={this.state.allGames}
-          />
-        </div>
+            <MatchPredictions 
+              allPredictions={this.state.allGames}
+            />
+          </div>
+        </TournamentContext.Provider>
       );
     } else {
 
     }
   }
 }
+
+App.contextType = TournamentContext;
 
 export default App;

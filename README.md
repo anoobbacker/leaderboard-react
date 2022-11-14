@@ -1,15 +1,14 @@
 # Overview
 This is a friendly fun project created after going through the pain of building custom things to calculate the leaderboard for the match predictions during the World Cup 2018, & Euro Cup 2020. I will be updating this for World Cup 2022. This can be used as the dashboard for the social betting between friends.
 
-This uses bootstrap's static single pages design suited best for all devices like mobile, desktop etc.
+This uses ReactJs, Bootstrap, HTML, JS, CSS for a static single pages design best suited for all devices like mobile, desktop etc.
 
 # Usage
 Fork this project and peform the following steps to customize it for you and your friends:
 1. `_data/*` has sample files for prediction and results. You need to update the files for you friends. Use an either online form like Microsoft Forms or Microsoft Excel to collect all the prediction scores from your friends.
 2. Upload the CSV files in a publicly accessible read-only storage location. You can use Azure Storage account for uploading the CSV, set the CORS, and set the appropriate permission. The browser just needs a read-only access to these CSV files.
-3. Update `src/assets/js/games/*.js` to point to the publicly accessible CSV
-4. Upload the Avatars for your friends under `src/assets/img/`. The final name for the Avatar should be like `Anoob.png`. Use the same name used in the CSV files for the Avatar image name. 
-5. Edit `index.html` and update `aside` with all the Avatar img URLs.
+3. Update `src/games/` to point to the publicly accessible CSV and MatchStages
+4. Upload the Avatars for your friends under `public/assets/img/`. The final name for the Avatar should be like `Anoob.png`. Use the same name used in the CSV files for the Avatar image name.
 
 To view a preview open the `index.html` file in your web browser after making the changes.
 
@@ -42,6 +41,9 @@ Code released under the [MIT](https://github.com/anoobbacker/betwc/blob/master/L
 ## Available Scripts
 
 In the project directory, you can run:
+
+### `npm install`
+To set up the packages.
 
 ### `npm start`
 

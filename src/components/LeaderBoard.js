@@ -1,8 +1,8 @@
 import {avatarImages} from '../const/avatarImg'
+import { TournamentContext } from '../components/TournamentContext';
 
 function LeaderBoard (props) {
         const tableHeader = ['Name', 'Total Points'];
-        
         return (
         <div className="section-heading text-center pb-3">
             <h2>Leader Board - {props.tournamentName}</h2>

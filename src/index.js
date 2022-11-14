@@ -3,36 +3,17 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import Avatars from './Avatars';
-import DrodownMenu from './components/DropownMenu'
-import {wc2022ResultsURL, wc2022PredictionDataURL, wc2022MatchStages} from "./games/football-wc/wc2022"
-import {wc2018ResultsURL, wc2018PredictionDataURL, wc2018MatchStages} from "./games/football-wc/wc2018"
-import {euro2020ResultsURL, euro2020PredictionDataURL, euro2020MatchStages} from "./games/euro/euro2020"
+import Intro from './Intro'
+import { Tournaments } from './components/TournamentContext';
 import reportWebVitals from './reportWebVitals';
 
-
+const tournament = Tournaments.WorldCup2022;
 const games = ["World Cup 2018", "Euro Cup 2020", "World Cup 2022"]
-const tName = "World Cup 2022";
-var resultsURL = null;
-var predictionDataURL = null;
-var matchStages = [];
-if (!"World Cup 2018".localeCompare(tName)) {
-  resultsURL = wc2018ResultsURL;
-  predictionDataURL = wc2018PredictionDataURL;
-  matchStages = wc2018MatchStages;
-} else if (!"World Cup 2022".localeCompare(tName)) {
-  resultsURL = wc2022ResultsURL;
-  predictionDataURL = wc2022PredictionDataURL;
-  matchStages = wc2022MatchStages;
-} else if (!"Euro Cup 2020".localeCompare(tName)) {
-  resultsURL = euro2020ResultsURL;
-  predictionDataURL = euro2020PredictionDataURL;
-  matchStages = euro2020MatchStages;
-}
 
-const dropdown = ReactDOM.createRoot(document.getElementById('games-menu'));
-dropdown.render(
+const intro = ReactDOM.createRoot(document.getElementById('games-menu'));
+intro.render(
   <React.StrictMode>
-    <DrodownMenu 
+    <Intro 
       allGames={games}
     />
   </React.StrictMode>
@@ -44,10 +25,10 @@ const app = ReactDOM.createRoot(document.getElementById('leaderboards'));
 app.render(
   <React.StrictMode>
     <App 
-      tournamentName={tName} 
-      resultsURL={resultsURL} 
-      predictionURL={predictionDataURL} 
-      matchStages={matchStages}
+      tournamentName={tournament.name} 
+      resultsURL={tournament.resultsURL} 
+      predictionURL={tournament.predictionURL} 
+      matchStages={tournament.matchStages}
     />
   </React.StrictMode>
 );
