@@ -4,7 +4,7 @@ import { TournamentContext } from '../components/TournamentContext';
 function LeaderBoard (props) {
         const tableHeader = ['Name', 'Total Points'];
         return (
-        <div className="section-heading text-center pb-3">
+        <div className="section-heading text-center pt-3 pb-3">
             <h2>Leader Board - {props.tournamentName}</h2>
             <p className="text-muted">Leader board shows the overrall points of the participants.</p>
             <table className="table table-condensed ">
