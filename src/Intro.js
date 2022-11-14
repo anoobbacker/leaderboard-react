@@ -1,10 +1,6 @@
 import React from 'react';
 
 class Intro extends React.Component {
-    constructor(props) {
-      super(props);
-    }
-
     render() {
         // let value = this.context;
         // console.log("Intro render Context: ", value)

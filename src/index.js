@@ -8,14 +8,11 @@ import { Tournaments } from './components/TournamentContext';
 import reportWebVitals from './reportWebVitals';
 
 const tournament = Tournaments.WorldCup2022;
-const games = ["World Cup 2018", "Euro Cup 2020", "World Cup 2022"]
 
 const intro = ReactDOM.createRoot(document.getElementById('games-menu'));
 intro.render(
   <React.StrictMode>
-    <Intro 
-      allGames={games}
-    />
+    <Intro />
   </React.StrictMode>
 );
 

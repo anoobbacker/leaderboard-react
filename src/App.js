@@ -1,6 +1,5 @@
 import React from 'react';
 import { TournamentContext, Tournaments } from './components/TournamentContext';
-import {updateLeaderBoardCatalog} from './games/football-wc/processWC'
 import {teamNameAcronymn } from './const/teamNameAndFlag'
 import LeaderBoard from './components/LeaderBoard';
 import LeaderBoardBreakDown from './components/LeaderBoardBreakDown';
@@ -24,13 +23,13 @@ class App extends React.Component {
       //console.log('App: You clicked:', e.target.text);
 
       var p = null;
-      if (Tournaments.WorldCup2022.name == e.target.text) {
+      if (Tournaments.WorldCup2022.name === e.target.text) {
           //console.log('App Clicked: setting ', Tournaments.WorldCup2022);
           p = this.setState({tournament: Tournaments.WorldCup2022});
-      } else if (Tournaments.WorldCup2018.name == e.target.text) {
+      } else if (Tournaments.WorldCup2018.name === e.target.text) {
           //console.log('App Clicked: setting ', Tournaments.WorldCup2018);
           p = this.setState({tournament: Tournaments.WorldCup2018});
-      } else if (Tournaments.EuroCup2020.name == e.target.text) {
+      } else if (Tournaments.EuroCup2020.name === e.target.text) {
           //console.log('App Clicked: setting ', Tournaments.EuroCup2020);
           p = this.setState({tournament: Tournaments.EuroCup2020});
       }
@@ -150,7 +149,7 @@ class App extends React.Component {
     //iterate through the matchStages defined under /js/games/*.js
     //and initalize the keyOptions
     matchStages.forEach((value, index, array) => {
-        if (keyOptions.length == 0) {
+        if (keyOptions.length === 0) {
           keyOptions.push("Participant"); //index 0
           keyOptions.push("Total points"); //index 1
           keyOptions.push("Total score predict matches"); //index 2
@@ -188,7 +187,7 @@ class App extends React.Component {
     }
 
     //set flag to indicate if tournament is still running.
-    if (activeStageMatchNumber != 0) {
+    if (activeStageMatchNumber !== 0) {
       tournamentStillOn = true;
       
       var activeStageStartDate = Date.parse(matchStages[activeStageMatchNumber].StageStartDate);
@@ -215,7 +214,7 @@ class App extends React.Component {
       var otherRow = predictionResults[ii];
 
       //Check if prediction row has correct column count.
-      if (otherRow.length != predictionRowColumnCount) {
+      if (otherRow.length !== predictionRowColumnCount) {
         continue;
       }
 
@@ -232,13 +231,13 @@ class App extends React.Component {
       var row = predictionResults[i];
 
       //Check if prediction row has correct column count.
-      if (row.length != predictionRowColumnCount) {
+      if (row.length !== predictionRowColumnCount) {
         continue;
       }
       //set new match flag. new match flag this is used to ensure that match name
       //is displayed once in the row where as participants names are shown seperatly
       currentMatchNo = row[0];
-      if (lastMatchNo != currentMatchNo) {
+      if (lastMatchNo !== currentMatchNo) {
         newMatch = true;
         isUpcoming = false;
       } else {
@@ -267,8 +266,8 @@ class App extends React.Component {
       var matchResultEval = allPredictions[currentMatchNo]?.match;
       var matchResult = matchResults[currentMatchNo];
 
-      var matchResultTeamAName = (matchResult[1] == "") ? "TBD" : matchResult[1];
-      var matchResultTeamBName = (matchResult[2] == "") ? "TBD" : matchResult[2];
+      var matchResultTeamAName = (matchResult[1] === "") ? "TBD" : matchResult[1];
+      var matchResultTeamBName = (matchResult[2] === "") ? "TBD" : matchResult[2];
 
       var predictTeamAName = teamNameAcronymn[matchResultTeamAName];
       var predictTeamBName = teamNameAcronymn[matchResultTeamBName];
@@ -281,7 +280,7 @@ class App extends React.Component {
         var matchResultTeamBScore = matchResult[5];
         var matchResultStatus = matchResult[3];
         var matchComplete = false;
-        if ("Complete".localeCompare(matchResultStatus) == 0) {
+        if ("Complete".localeCompare(matchResultStatus) === 0) {
           if (matchResultTeamAScore > matchResultTeamBScore) {
             matchResultEval = {
                 teamA: {name: predictTeamAName, score: matchResultTeamAScore, result: 'win'},
@@ -313,9 +312,9 @@ class App extends React.Component {
           if (diffDays <= 2) {
             isUpcoming = true;
             upComingMatchCount++;
-          } else if ( (currentMatchStage == activeStageMatchNumber) 
-                && ((activeStageYetToStart == true) 
-                || (activeStageYetToEnd == true))
+          } else if ( (currentMatchStage === activeStageMatchNumber) 
+                && ((activeStageYetToStart === true) 
+                || (activeStageYetToEnd === true))
             ) {
             isUpcoming = true;
             upComingMatchCount++;
@@ -349,18 +348,18 @@ class App extends React.Component {
       //points
       var predictPoints = matchStages[currentMatchStage].LostPoints;
 
-      if ((0 == predictTeamAScore.length) && (0 == predictTeamBScore.length)) {
+      if ((0 === predictTeamAScore.length) && (0 === predictTeamBScore.length)) {
         //upcoming prediction
         predictEval = {
             type: '📅'
         }
-      } else if ((-1 == predictTeamAScore) && (-1 == predictTeamBScore)) {
+      } else if ((-1 === predictTeamAScore) && (-1 === predictTeamBScore)) {
         //skipped prediction
         predictEval = {
             type: '➖'
         }
-      } else if ((matchResultTeamAScore == predictTeamAScore) &&
-        (matchResultTeamBScore == predictTeamBScore)) {
+      } else if ((matchResultTeamAScore === predictTeamAScore) &&
+        (matchResultTeamBScore === predictTeamBScore)) {
         //Perfect prediction
         predictPoints = matchStages[currentMatchStage].ScoreAndWinnerPoints;
         predictEval = {
@@ -368,8 +367,8 @@ class App extends React.Component {
             teamA: predictTeamAScore, teamB: predictTeamBScore,
             points: predictPoints
         }  
-      } else if ((matchResultTeamAScore == matchResultTeamBScore) &&
-        (predictTeamAScore == predictTeamBScore)) {
+      } else if ((matchResultTeamAScore === matchResultTeamBScore) &&
+        (predictTeamAScore === predictTeamBScore)) {
         //Only predicted the winner but score wasn't correct.
         predictPoints = matchStages[currentMatchStage].WinnerOnlyPoints;
         predictEval = {
@@ -442,17 +441,17 @@ class App extends React.Component {
           leaderboardPredictMatchesWinner[participantName].push(predictEval);
         }
 
-        if (predictPoints == matchStages[currentMatchStage].ScoreAndWinnerPoints) {
+        if (predictPoints === matchStages[currentMatchStage].ScoreAndWinnerPoints) {
           leaderboardPredictScorePlusWinnerGameCount[participantName] += 1;
           leaderboardPredictMatchesScorePlusWinner[participantName].push(predictEval);
         }
 
-        if (predictPoints == matchStages[currentMatchStage].LostPoints) {
+        if (predictPoints === matchStages[currentMatchStage].LostPoints) {
           leaderboardPredictLossesGameCount[participantName] += 1;
           leaderboardPredictMatchesLost[participantName].push(predictEval);
         }
 
-        updateLeaderBoardCatalog(keyOptions, participantName, predictPoints, 
+        this.updateLeaderBoardCatalog(keyOptions, participantName, predictPoints, 
             currentMatchStage, matchStages, leaderboardCatalog);
       } else {
         predictEval = {
@@ -465,7 +464,7 @@ class App extends React.Component {
       if (isUpcoming && tournamentStillOn) {
         upcomingPredictions[currentMatchNo].predict[participantName] = predictEval;
       }
-      if ('📅' != matchResultEval.result) {
+      if ('📅' !== matchResultEval.result) {
         //increment the total predictions
         leaderboardTotalPredicts[participantName] += 1;
         leaderboardTotalPredicts['Total'] += 1;
@@ -515,10 +514,84 @@ class App extends React.Component {
     //console.log("State: ", this.state)
   }
 
+  updateLeaderBoardCatalog(keyOptions, participantName, predictPoints, 
+    currentMatchStage, matchStages, leaderboardCatalog) {
+
+    this.checkAndInitialize(participantName, keyOptions, leaderboardCatalog);
+  
+    //find participantName in the array
+    for (var i = 0; i < leaderboardCatalog.length; i++) {
+      if (leaderboardCatalog[i][keyOptions[0]] === participantName) {
+        var leaderBoardItem = leaderboardCatalog[i];
+        
+        //update total prediction points
+        leaderBoardItem[keyOptions[1]] += predictPoints;
+  
+        //count correct score prediction
+        if (predictPoints === matchStages[currentMatchStage].ScoreAndWinnerPoints) {
+          leaderBoardItem[keyOptions[2]] += 1;
+        }
+  
+        //count winner only predictions
+        if (predictPoints >= matchStages[currentMatchStage].WinnerOnlyPoints) {
+          leaderBoardItem[keyOptions[3]] += 1;
+        }
+  
+        //count lost predictions
+        if (predictPoints === matchStages[currentMatchStage].LostPoints) {
+          leaderBoardItem[keyOptions[4]] += 1;
+        }
+  
+        //update total number of matches
+        leaderBoardItem[keyOptions[5]] += 1;
+  
+        matchStages.forEach(initializeStageLeaderBoards);
+  
+        function initializeStageLeaderBoards(value, index, array) {
+          //stage points, prefect prediction, winner only & lost
+          leaderBoardItem[value['Desc'] + " points"] += predictPoints;
+          if (predictPoints === matchStages[currentMatchStage].ScoreAndWinnerPoints) {
+            leaderBoardItem[value['Desc'] + " score predict matches"] += 1;
+          }
+  
+          if (predictPoints >= matchStages[currentMatchStage].WinnerOnlyPoints) {
+            leaderBoardItem[value['Desc'] + " winner predict matches"] += 1;
+          }
+  
+          if (predictPoints === matchStages[currentMatchStage].LostPoints) {
+            leaderBoardItem[value['Desc'] + " predict lost matches"] += 1;
+          }
+        }
+      }
+    }
+}
+
+checkAndInitialize(pName, keyOptions, leaderboardCatalog) {
+  var pFound = false;
+  //find participantName in the array
+  for (var i = 0; i < leaderboardCatalog.length; i++) {
+    var leaderBoardItem = leaderboardCatalog[i];
+    if (leaderBoardItem[keyOptions[0]] === pName) {
+      pFound = true;
+      break;
+    }
+  }
+
+  if (pFound === false) {
+    var pKeyName = keyOptions[0];
+    var leaderBoardItem = {};
+    leaderBoardItem[pKeyName] = pName;
+    for (var k = 1; k < keyOptions.length; k++) {
+      leaderBoardItem[keyOptions[k]] = 0;
+    }
+    leaderboardCatalog.push(leaderBoardItem);
+  }
+}
+
   render() {
     const leaderboard = this.state?.leaderboard;
     const totalPredict = this.state?.totalPredicts?.Total;
-    if ( undefined != leaderboard ) {
+    if ( undefined !== leaderboard ) {
       return (
         <TournamentContext.Provider value={this.state}>
           <Content />
@@ -542,7 +615,7 @@ class App extends React.Component {
               totalPredicts={totalPredict}
               />
 
-            {(undefined != totalPredict) && (totalPredict> 0) &&
+            {(undefined !== totalPredict) && (totalPredict> 0) &&
               <LeaderBoardBreakDown 
                 leaderNames={this.state.sortedLeaderNames}
                 countScorePlusWin={this.state.countScorePlusWin}

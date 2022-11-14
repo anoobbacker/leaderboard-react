@@ -1,5 +1,4 @@
 import {avatarImages} from '../const/avatarImg'
-import { TournamentContext } from '../components/TournamentContext';
 
 function LeaderBoard (props) {
         const tableHeader = ['Name', 'Total Points'];
@@ -18,10 +17,10 @@ function LeaderBoard (props) {
                     {
                         props.leaderNames?.map((row, index)=>
                             <tr key={index}>
-                                <td align="right"><img src={process.env.PUBLIC_URL + avatarImages[row]} width="30" /></td>
+                                <td align="right"><img src={process.env.PUBLIC_URL + avatarImages[row]} alt="Avatar images" width="30" /></td>
                                 <td align="left">{row}</td>
                                 <td className="text-center">
-                                  {(props.totalPredicts == 0) &&
+                                  {(props.totalPredicts === 0) &&
                                     '📅'
                                   }
                                   <span  className={(props.totalPredicts > 0) ? 'fw-bold' : 'visually-hidden'}>{props.leaderBoard[row]}</span><br/>
