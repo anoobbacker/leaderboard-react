@@ -12,9 +12,7 @@ import DropdownMenu from './DropdownMenu';
 // An intermediate component that uses the changeTournament
 function Content(props) {
   return (
-      <div>
-          <DropdownMenu />
-      </div>
+      <DropdownMenu />
   );
 }
 

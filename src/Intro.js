@@ -48,7 +48,6 @@ class Intro extends React.Component {
                         </tr>
                     </tbody> 
                 </table>
-                <p className="text-muted mb-3">Click the button below to find the leaderboard topper!</p>
             </div>                        
         );
     }
